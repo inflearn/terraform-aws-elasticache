@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.75.1"
+      version = "~> 4.10.0"
     }
   }
 }
@@ -36,11 +36,17 @@ module "security_group" {
 resource "aws_elasticache_parameter_group" "this" {
   family = "redis6.x"
   name   = "example-inflab-elasticache-cluster-redis"
+
+  parameter {
+    name  = "cluster-enabled"
+    value = "yes"
+  }
 }
 
 module "elasticache" {
   source               = "../../"
   name                 = "example-inflab-elasticache-cluster-redis"
+  description          = "redis cluster for test"
   subnets              = module.vpc.public_subnets
   security_groups      = [module.security_group.security_group_id]
   engine               = "redis"
@@ -49,7 +55,7 @@ module "elasticache" {
   instance_type        = "cache.t3.micro"
   parameter_group_name = aws_elasticache_parameter_group.this.name
   node_groups          = 2
-  replicas             = 2
+  replicas             = 1
 
   tags = {
     iac  = "terraform"

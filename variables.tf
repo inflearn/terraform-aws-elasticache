@@ -22,19 +22,19 @@ variable "security_groups" {
 }
 
 variable "nodes" {
-  description = "Number of cache nodes to provision (Non cluster mode only)"
+  description = "The initial number of cache nodes that the cache cluster will have. For Redis, this value must be 1. For Memcached, this value must be between 1 and 40. If this number is reduced on subsequent runs, the highest numbered nodes will be removed. (Non cluster mode only)"
   type        = number
   default     = null
 }
 
 variable "node_groups" {
-  description = "Number of cache node groups to provision (Cluster mode only)"
+  description = "Number of node groups (shards) for this Redis replication group."
   type        = number
   default     = null
 }
 
 variable "replicas" {
-  description = "Number of replicas to provision (Cluster mode only)"
+  description = "Number of replica nodes in each node group."
   type        = number
   default     = null
 }

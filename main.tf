@@ -5,23 +5,19 @@ resource "aws_elasticache_subnet_group" "this" {
 }
 
 resource "aws_elasticache_replication_group" "this" {
-  count                         = var.node_groups != null ? 1 : 0
-  replication_group_id          = var.name
-  replication_group_description = "For elasticache ${var.name}"
-  subnet_group_name             = coalesce(var.subnet_group_name, try(aws_elasticache_subnet_group.this[0].name, null))
-  security_group_ids            = var.security_groups
-  engine                        = var.engine
-  engine_version                = var.engine_version
-  node_type                     = var.instance_type
-  port                          = var.port
-  parameter_group_name          = var.parameter_group_name
-  automatic_failover_enabled    = var.automatic_failover_enabled
-  tags                          = var.tags
-
-  cluster_mode {
-    num_node_groups         = var.node_groups
-    replicas_per_node_group = var.replicas
-  }
+  count                      = var.node_groups != null ? 1 : 0
+  replication_group_id       = var.name
+  subnet_group_name          = coalesce(var.subnet_group_name, try(aws_elasticache_subnet_group.this[0].name, null))
+  security_group_ids         = var.security_groups
+  engine                     = var.engine
+  engine_version             = var.engine_version
+  node_type                  = var.instance_type
+  port                       = var.port
+  parameter_group_name       = var.parameter_group_name
+  automatic_failover_enabled = var.automatic_failover_enabled
+  num_node_groups            = var.node_groups
+  replicas_per_node_group    = var.replicas
+  tags                       = var.tags
 }
 
 resource "aws_elasticache_cluster" "this" {

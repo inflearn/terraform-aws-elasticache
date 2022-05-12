@@ -7,6 +7,7 @@ resource "aws_elasticache_subnet_group" "this" {
 resource "aws_elasticache_replication_group" "this" {
   count                      = var.node_groups != null ? 1 : 0
   replication_group_id       = var.name
+  description                = var.description
   subnet_group_name          = coalesce(var.subnet_group_name, try(aws_elasticache_subnet_group.this[0].name, null))
   security_group_ids         = var.security_groups
   engine                     = var.engine

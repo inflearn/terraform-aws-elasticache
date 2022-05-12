@@ -2,6 +2,11 @@ variable "name" {
   type = string
 }
 
+variable "description" {
+  type    = string
+  default = ""
+}
+
 variable "parameter_group_name" {
   type = string
 }

@@ -3,7 +3,7 @@ output "id" {
 }
 
 output "name" {
-  value = try(aws_elasticache_replication_group.this[0].id, aws_elasticache_cluster.this[0].id)
+  value = try(aws_elasticache_replication_group.this[0].replication_group_id, aws_elasticache_cluster.this[0].id)
 }
 
 output "primary_endpoint" {
